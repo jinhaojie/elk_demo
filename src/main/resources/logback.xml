@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>192.168.20.12:9600</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+    <logger name="com.jin" level="${loggingLevel}" />
+
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+
+    <logger name="com.jin" level="INFO" additivity="false" >
+        <appender-ref ref="stash" />
+    </logger>
+    <!--<root level="DEBUG">-->
+        <!--<level value="${loggingLevel}" />-->
+        <!--<appender-ref ref="stash" />-->
+    <!--</root>-->
+</configuration>

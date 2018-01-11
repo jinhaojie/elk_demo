@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>192.168.20.12:9600</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder" >
+            <providers>
+                <mdc/> <!-- MDC variables on the Thread will be written as JSON fields-->
+                <context/> <!--Outputs entries from logback's context -->
+                <version/> <!-- Logstash json format version, the @version field in the output-->
+                <logLevel/>
+                <loggerName/>
+
+                <!--<pattern>-->
+                    <!--<pattern> &lt;!&ndash; we can add some custom fields to be sent with all the log entries.    &ndash;&gt;-->
+                        <!--{      &lt;!&ndash;make filtering easier in Logstash&ndash;&gt;-->
+                        <!--"appName": "elk-testdata1",&lt;!&ndash;or searching with Kibana&ndash;&gt;-->
+                        <!--"appVersion": "1.0"-->
+                        <!--}-->
+                    <!--</pattern>-->
+                <!--</pattern>-->
+
+                <threadName/>
+                <message/>
+
+                <logstashMarkers/> <!-- Useful so we can add extra information for specific log lines as Markers-->
+                <arguments/> <!--or through StructuredArguments-->
+
+                <stackTrace/>
+            </providers>
+        </encoder>
+    </appender>
+    <logger name="com.jin" level="${loggingLevel}" />
+
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+    <root level="DEBUG">
+        <level value="${loggingLevel}" />
+        <appender-ref ref="stash" />
+    </root>
+</configuration>
